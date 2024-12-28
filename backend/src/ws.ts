@@ -72,6 +72,7 @@ function initHandlers(socket: Socket, replId: string) {
 
   socket.on("requestTerminal", async () => {
     terminalManager.createPty(socket.id, replId, (data, id) => {
+      console.log("requestTerminal: ", data);
       socket.emit("terminal", {
         data: Buffer.from(data, "utf-8"),
       });
@@ -82,6 +83,7 @@ function initHandlers(socket: Socket, replId: string) {
     "terminalData",
     async ({ data }: { data: string; terminalId: number }) => {
       terminalManager.write(socket.id, data);
+      console.log("terminalData: ", data);
     }
   );
 }
